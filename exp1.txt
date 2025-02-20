@@ -1,0 +1,407 @@
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u root
+[sudo] password for CEC: 
+Sorry, try again.
+[sudo] password for CEC: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> Create database Akhil;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show Akhil;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Akhil' at line 1
+mysql> use Akhil
+Database changed
+mysql> show Akhil;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Akhil' at line 1
+mysql> Create database akhil;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use akhil;
+Database changed
+mysql> show akhil
+    -> show akhil;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'akhil
+show akhil' at line 1
+mysql> show databases
+    -> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show databases' at line 2
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| Akhil              |
+| akhil              |
+| amrutha            |
+| college            |
+| exam               |
+| examdb             |
+| mysql              |
+| performance_schema |
+| sachu              |
+| saranya            |
+| sys                |
++--------------------+
+12 rows in set (0.00 sec)
+
+mysql> create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,city varchar(10) Not Null)
+    -> create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,city varchar(10) Not Null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,' at line 2
+mysql> create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,city varchar(10) Not 
+[1]+  Stopped                 sudo mysql -u root
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,city varchar(10) Not Null);
+create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,city varchar(10) Not Null);
+^C
+mysql> desc customer
+    -> show databases
+    -> show databases;
+ERROR 1046 (3D000): No database selected
+mysql> use Akhil;
+Database changed
+mysql> create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,city varchar(10) Not Null);
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| c_name  | varchar(15) | NO   |     | NULL    |       |
+| city    | varchar(10) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+mysql> create table branch(branch_id varchar(10)primary key,bname varchar(10),city varchar(10) Not Null);
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc branch;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| branch_id | varchar(10) | NO   | PRI | NULL    |       |
+| bname     | varchar(10) | YES  |     | NULL    |       |
+| city      | varchar(10) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table deposit(acc_no varchar(10)primary key,cust_id varchar(10) not null,amount int,branch_id varchar(5),open_date date);
+Query OK, 0 rows affected (1.05 sec)
+
+mysql> desc deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| cust_id   | varchar(10) | NO   |     | NULL    |       |
+| amount    | int(11)     | YES  |     | NULL    |       |
+| branch_id | varchar(5)  | YES  |     | NULL    |       |
+| open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table borrow(loan_no varchar(10)primary key,cust_id varchar(10),branch_id varchar(5),amount int);
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> desc borrow;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| loan_no   | varchar(10) | NO   | PRI | NULL    |       |
+| cust_id   | varchar(10) | YES  |     | NULL    |       |
+| branch_id | varchar(5)  | YES  |     | NULL    |       |
+| amount    | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer add column add address varchar(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add address varchar(10)' at line 1
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| c_name  | varchar(15) | NO   |     | NULL    |       |
+| city    | varchar(10) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> alter table customer add column address varchar(10);
+Query OK, 0 rows affected (0.48 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| c_name  | varchar(15) | NO   |     | NULL    |       |
+| city    | varchar(10) | NO   |     | NULL    |       |
+| address | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer modify cust_id int;
+Query OK, 0 rows affected (0.57 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | int(11)     | NO   | PRI | NULL    |       |
+| c_name  | varchar(15) | NO   |     | NULL    |       |
+| city    | varchar(10) | NO   |     | NULL    |       |
+| address | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer change column address new_address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table customer change column address new_address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table customer change column address new_address varchar(10);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| cust_id     | int(11)     | NO   | PRI | NULL    |       |
+| c_name      | varchar(15) | NO   |     | NULL    |       |
+| city        | varchar(10) | NO   |     | NULL    |       |
+| new_address | varchar(10) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer drop column new_address;
+Query OK, 0 rows affected (0.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | int(11)     | NO   | PRI | NULL    |       |
+| c_name  | varchar(15) | NO   |     | NULL    |       |
+| city    | varchar(10) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table branch rename to Branch1;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> desc branch;
+ERROR 1146 (42S02): Table 'Akhil.branch' doesn't exist
+mysql> desc Branch1;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| branch_id | varchar(10) | NO   | PRI | NULL    |       |
+| bname     | varchar(10) | YES  |     | NULL    |       |
+| city      | varchar(10) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create user user1 identified by 'abc123';
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> grant all on customer to user1;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> exit;
+Bye
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u user1 -p;
+[sudo] password for CEC: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| Akhil              |
++--------------------+
+2 rows in set (0.08 sec)
+
+mysql> use Akhil;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables;
++-----------------+
+| Tables_in_Akhil |
++-----------------+
+| customer        |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> exit
+Bye
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u root;
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Akhil;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> exit;
+Bye
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u root;
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> revoke all on customer to user1;
+ERROR 1046 (3D000): No database selected
+mysql> use Akhil;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> revoke all on customer to user1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to user1' at line 1
+mysql> exit;
+Bye
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u root;
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Akhil;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> revoke all on customer to user1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to user1' at line 1
+mysql> exit;
+Bye
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u user1 -p;
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Akhil;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> exit;
+Bye
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u root;
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> revoke all on customer from user1;
+ERROR 1046 (3D000): No database selected
+mysql> use Akhil;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> revoke all on customer from user1;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> exit;
+Bye
+CEC@user-HP-280-G3-MT:~$ sudo mysql -u user1 -p;
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Akhil;
+ERROR 1044 (42000): Access denied for user 'user1'@'%' to database 'Akhil'
+mysql> 
+
