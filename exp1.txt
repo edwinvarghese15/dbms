@@ -14,34 +14,19 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> Create database Akhil;
+mysql> Create database edwin;
 Query OK, 1 row affected (0.02 sec)
 
-mysql> show Akhil;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Akhil' at line 1
-mysql> use Akhil
+mysql> use edwin;
 Database changed
-mysql> show Akhil;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Akhil' at line 1
-mysql> Create database akhil;
-Query OK, 1 row affected (0.02 sec)
 
-mysql> use akhil;
-Database changed
-mysql> show akhil
-    -> show akhil;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'akhil
-show akhil' at line 1
-mysql> show databases
-    -> show databases;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show databases' at line 2
 mysql> show databases;
 +--------------------+
 | Database           |
 +--------------------+
 | information_schema |
 | Akhil              |
-| akhil              |
+| edwin              |
 | amrutha            |
 | college            |
 | exam               |
@@ -79,7 +64,7 @@ mysql> desc customer
     -> show databases
     -> show databases;
 ERROR 1046 (3D000): No database selected
-mysql> use Akhil;
+mysql> use Edwin;
 Database changed
 mysql> create table customer(cust_id varchar(10)primary key,c_name varchar(15)Not Null,city varchar(10) Not Null);
 Query OK, 0 rows affected (0.34 sec)
@@ -178,10 +163,6 @@ mysql> desc customer;
 +---------+-------------+------+-----+---------+-------+
 4 rows in set (0.00 sec)
 
-mysql> alter table customer change column address new_address;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
-mysql> alter table customer change column address new_address;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
 mysql> alter table customer change column address new_address varchar(10);
 Query OK, 0 rows affected (0.08 sec)
 Records: 0  Duplicates: 0  Warnings: 0
@@ -214,8 +195,6 @@ mysql> desc customer;
 mysql> alter table branch rename to Branch1;
 Query OK, 0 rows affected (0.10 sec)
 
-mysql> desc branch;
-ERROR 1146 (42S02): Table 'Akhil.branch' doesn't exist
 mysql> desc Branch1;
 +-----------+-------------+------+-----+---------+-------+
 | Field     | Type        | Null | Key | Default | Extra |
@@ -263,11 +242,10 @@ Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
 Database changed
-mysql> show table;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+
 mysql> show tables;
 +-----------------+
-| Tables_in_Akhil |
+| Tables_in_Edwin |
 +-----------------+
 | customer        |
 +-----------------+
@@ -288,7 +266,7 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> use Akhil;
+mysql> use Edwin;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
@@ -310,7 +288,7 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql> revoke all on customer to user1;
 ERROR 1046 (3D000): No database selected
-mysql> use Akhil;
+mysql> use Edwin;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
@@ -332,7 +310,7 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> use Akhil;
+mysql> use Edwin;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
@@ -355,7 +333,7 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> use Akhil;
+mysql> use Edwin;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
@@ -375,9 +353,7 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> revoke all on customer from user1;
-ERROR 1046 (3D000): No database selected
-mysql> use Akhil;
+mysql> use Edwin;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
@@ -401,7 +377,7 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> use Akhil;
+mysql> use Edwin;
 ERROR 1044 (42000): Access denied for user 'user1'@'%' to database 'Akhil'
 mysql> 
 
