@@ -87,13 +87,11 @@ mysql> select * from branch;
 +-----------+--------+-----------+
 10 rows in set (0.00 sec)
 
-mysql> insert into deposit values(3001,1002,2002,20000,'2012-12-13');
-ERROR 1146 (42S02): Table 'abhirami.deposit' doesn't exist
+
 mysql> insert into Deposit values(3001,1002,2002,20000,'2012-12-13');
 Query OK, 1 row affected (0.10 sec)
 
-mysql> select * from deposit;
-ERROR 1146 (42S02): Table 'abhirami.deposit' doesn't exist
+
 mysql> select * from Deposit;
 +--------+---------+--------+-----------+------------+
 | Acc_no | cust_id | amount | Branch_id | open_date  |
@@ -105,8 +103,7 @@ mysql> select * from Deposit;
 mysql> insert into Deposit values(3002,1005,40000,2002,'2013-01-10');
 Query OK, 1 row affected (0.11 sec)
 
-mysql> insert int Deposit values(3003,1006,50000,2003,'2020-05-20');
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int Deposit values(3003,1006,50000,2003,'2020-05-20')' at line 1
+
 mysql> insert into Deposit values(3003,1006,50000,2003,'2020-05-20');
 Query OK, 1 row affected (0.08 sec)
 
@@ -138,8 +135,7 @@ Query OK, 1 row affected (0.13 sec)
 mysql> insert into Deposit values(3008,1013,20030,2007,'2023-12-18');
 Query OK, 1 row affected (0.12 sec)
 
-mysql> insert into Deposit values(3009,1014,5000,2009,'2024-05-301');
-ERROR 1292 (22007): Incorrect date value: '2024-05-301' for column 'open_date' at row 1
+
 mysql> insert into Deposit values(3009,1014,5000,2009,'2024-05-30');
 Query OK, 1 row affected (0.10 sec)
 
@@ -195,7 +191,7 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> use abhirami;
+mysql> use edwin;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
@@ -232,12 +228,7 @@ mysql> select * from Deposit;
 +--------+---------+--------+-----------+------------+
 10 rows in set (0.00 sec)
 
-mysql> nsert into Borrow values(4001,1001,2004,10000),
-    -> insert into Borrow values(4001,1001,2004,10000);
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nsert into Borrow values(4001,1001,2004,10000),
-insert into Borrow values(4001,1' at line 1
-mysql> insert into borrow values(4001,1001,2004,10000);
-ERROR 1146 (42S02): Table 'abhirami.borrow' doesn't exist
+
 mysql> insert into Borrow values(4001,1001,2004,10000);
 Query OK, 1 row affected (0.10 sec)
 
@@ -290,8 +281,6 @@ mysql> select * from Borrow;
 +---------+---------+-----------+--------+
 8 rows in set (0.00 sec)
 
-mysql> insert into Borrow values(4004,1016,2009,500000);
-ERROR 1062 (23000): Duplicate entry '4004' for key 'Borrow.PRIMARY'
 mysql> insert into Borrow values(4009,1016,2009,500000);
 Query OK, 1 row affected (0.08 sec)
 
@@ -315,8 +304,6 @@ mysql> select * from Borrow;
 +---------+---------+-----------+--------+
 10 rows in set (0.00 sec)
 
-mysql> update deposit set amount=20000 where branch_id=2002;
-ERROR 1146 (42S02): Table 'abhirami.deposit' doesn't exist
 mysql> update Deposit set amount=20000 where branch_id=2002;
 Query OK, 1 row affected (0.09 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
@@ -363,10 +350,6 @@ mysql> select * from Deposit;
 +--------+---------+--------+-----------+------------+
 10 rows in set (0.00 sec)
 
-mysql> update Deposit Branch_id=2000 where Branch_id=20000;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=2000 where Branch_id=20000' at line 1
-mysql> update Deposit Branch_id=2000 where Acc_no=3001;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=2000 where Acc_no=3001' at line 1
 mysql> update Deposit set Branch_id=2000 where Acc_no=3001;
 Query OK, 1 row affected (0.10 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
@@ -402,8 +385,6 @@ Query OK, 1 row affected (0.09 sec)
 mysql> insert into customer values(1004,'Aswin','Thrissur');
 Query OK, 1 row affected (0.10 sec)
 
-mysql> insert into customer values(1005,'Abhirami','Pathanamthitta');
-ERROR 1406 (22001): Data too long for column 'city' at row 1
 mysql> insert into customer values(1005,'Abhirami','alappuzha');
 Query OK, 1 row affected (0.10 sec)
 
@@ -470,8 +451,7 @@ mysql> select cust_id,c_name from customer;
 +---------+----------+
 10 rows in set (0.00 sec)
 
-mysql> select cust_id,amount from deposit where amount>10000;
-ERROR 1146 (42S02): Table 'abhirami.deposit' doesn't exist
+
 mysql> select cust_id,amount from Deposit where amount>10000;
 +---------+--------+
 | cust_id | amount |
@@ -485,8 +465,7 @@ mysql> select cust_id,amount from Deposit where amount>10000;
 +---------+--------+
 6 rows in set (0.00 sec)
 
-mysql> select open_date from Deposit where cust_id=(select cust_id from Deposit where c_name='anil');
-ERROR 1054 (42S22): Unknown column 'c_name' in 'where clause'
+
 mysql> desc Deposit;
 +-----------+-------------+------+-----+---------+-------+
 | Field     | Type        | Null | Key | Default | Extra |
@@ -502,8 +481,7 @@ mysql> desc Deposit;
 mysql> select open_date from Deposit where cust_id=(select cust_id from customer where c_name='anil');
 Empty set (0.00 sec)
 
-mysql> update Deposit set values cust_id=1007 where Acc_no=3007;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values cust_id=1007 where Acc_no=3007' at line 1
+
 mysql> update Deposit set cust_id=1007 where Acc_no=3007;
 Query OK, 1 row affected (0.09 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
@@ -602,8 +580,7 @@ mysql> select c_name from customer where c_name like's%';
 +--------+
 2 rows in set (0.01 sec)
 
-mysql> select c_name from customer where cust_id in (select cust_id from deposit where c_name like '-a%');
-ERROR 1146 (42S02): Table 'abhirami.deposit' doesn't exist
+
 mysql> select c_name from customer where cust_id in (select cust_id from Deposit where c_name like '-a%');
 Empty set (0.00 sec)
 
@@ -621,15 +598,11 @@ mysql> select c_name from customer where c_name like'a%';
 +----------+
 7 rows in set (0.00 sec)
 
-mysql> select c_name from Deposits where c_name like'a%';
-ERROR 1146 (42S02): Table 'abhirami.Deposits' doesn't exist
-mysql> select c_name from Deposit where c_name like'a%';
-ERROR 1054 (42S22): Unknown column 'c_name' in 'field list'
+
 mysql> select c_name from customer where cust_id in (select cust_id from Deposit where c_name like '-a%');
 Empty set (0.00 sec)
 
-mysql> select c_name from Deposit where c_name like'%a%';
-ERROR 1054 (42S22): Unknown column 'c_name' in 'field list'
+
 mysql> select c_name from customer where c_name like'%a%';
 +----------+
 | c_name   |
@@ -645,8 +618,6 @@ mysql> select c_name from customer where c_name like'%a%';
 +----------+
 8 rows in set (0.01 sec)
 
-mysql> select customer.c_name,Deposit.acc_no,Deposit.amount from customer_Deposit where customer.cust_id=Deposit.cust_id and length(customer.c_name)=5;
-ERROR 1146 (42S02): Table 'abhirami.customer_Deposit' doesn't exist
 mysql> select loan_no,cust_id,Branch_id from Borrow;
 +---------+---------+-----------+
 | loan_no | cust_id | Branch_id |
@@ -678,8 +649,7 @@ mysql> select c_name,cust_id from customer where cust_id in(select cust_id from 
 +----------+---------+
 7 rows in set (0.02 sec)
 
-mysql> select c_name from customer where cust_id in(select cust_id from Deposit)and cust_id not in(select cust_id from borrow);
-ERROR 1146 (42S02): Table 'abhirami.borrow' doesn't exist
+
 mysql> select c_name from customer where cust_id in(select cust_id from Deposit)and cust_id not in(select cust_id from Borrow);
 +----------+
 | c_name   |
@@ -690,12 +660,7 @@ mysql> select c_name from customer where cust_id in(select cust_id from Deposit)
 +----------+
 3 rows in set (0.01 sec)
 
-mysql> select c_name,acc_no,amount from Deposit where customer.cust_id=Deposit.cust_id and length(c_name)=5;
-ERROR 1054 (42S22): Unknown column 'c_name' in 'field list'
-mysql> select c_name,Acc_no,amount from Deposit where customer.cust_id=Deposit.cust_id and length(c_name)=5;
-ERROR 1054 (42S22): Unknown column 'c_name' in 'field list'
-mysql> select c_name,Acc_no,amount from Deposit where customer.cust_id=Deposit.cust_id and length(c_name)=5;
-ERROR 1054 (42S22): Unknown column 'c_name' in 'field list'
+
 mysql> 
 
 select c_name,acc_no,amount from customer,Deposit where customer.cust_id=Deposit.cust_id and length(c_name)=5;
