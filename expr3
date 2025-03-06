@@ -1,0 +1,426 @@
+CEC@duolexia:~$ sudo mysql -u root
+[sudo] password for CEC: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.41-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| Adarsh             |
+| Bank               |
+| Exam               |
+| customer           |
+| exam               |
+| gopika             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
+| vishnu             |
++--------------------+
+12 rows in set (0.03 sec)
+
+mysql> use Bank;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> desc Bank;
+ERROR 1146 (42S02): Table 'Bank.Bank' doesn't exist
+mysql> show tables;
++----------------+
+| Tables_in_Bank |
++----------------+
+| Borrow         |
+| Branch         |
+| Customer       |
+| Deposit        |
++----------------+
+4 rows in set (0.01 sec)
+
+
+mysql> desc Borrow;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Loan_no | varchar(15) | NO   | PRI | NULL    |       |
+| Branch  | varchar(15) | YES  |     | NULL    |       |
+| Amt     | int         | YES  |     | NULL    |       |
+| B_name  | varchar(15) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.16 sec)
+
+mysql> select sum(Amt) from  Borrow;
++----------+
+| sum(Amt) |
++----------+
+|     NULL |
++----------+
+1 row in set (0.02 sec)
+
+
+mysql> select * from  Borrow;
+Empty set (0.00 sec)
+
+
+
+
+mysql> alter table Borrow add column( cust_id int);
+Query OK, 0 rows affected (1.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Borrow add column( branch_id int);
+Query OK, 0 rows affected (0.94 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into Borrow(loan_no,cust_id,branch_id,Amt)values (201,1,2,60000), (202,3,3,45000), (203,5,5,80000), (204,7,7,90000), (205,9,9,100000), (206,10,10,75000), (207,2,4,20000), (208,4,6,30000), (209,6,8,65000), (2010,8,1,72000);
+Query OK, 10 rows affected (0.08 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select *from Borrow;
++---------+--------+--------+--------+---------+-----------+
+| Loan_no | Branch | Amt    | B_name | cust_id | branch_id |
++---------+--------+--------+--------+---------+-----------+
+| 201     | NULL   |  60000 | NULL   |       1 |         2 |
+| 2010    | NULL   |  72000 | NULL   |       8 |         1 |
+| 202     | NULL   |  45000 | NULL   |       3 |         3 |
+| 203     | NULL   |  80000 | NULL   |       5 |         5 |
+| 204     | NULL   |  90000 | NULL   |       7 |         7 |
+| 205     | NULL   | 100000 | NULL   |       9 |         9 |
+| 206     | NULL   |  75000 | NULL   |      10 |        10 |
+| 207     | NULL   |  20000 | NULL   |       2 |         4 |
+| 208     | NULL   |  30000 | NULL   |       4 |         6 |
+| 209     | NULL   |  65000 | NULL   |       6 |         8 |
++---------+--------+--------+--------+---------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Borrow DROP COLUMN B_name;
+Query OK, 0 rows affected (0.33 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Borrow DROP COLUMN Branch;
+Query OK, 0 rows affected (0.42 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from Borrow;
++---------+--------+---------+-----------+
+| Loan_no | Amt    | cust_id | branch_id |
++---------+--------+---------+-----------+
+| 201     |  60000 |       1 |         2 |
+| 2010    |  72000 |       8 |         1 |
+| 202     |  45000 |       3 |         3 |
+| 203     |  80000 |       5 |         5 |
+| 204     |  90000 |       7 |         7 |
+| 205     | 100000 |       9 |         9 |
+| 206     |  75000 |      10 |        10 |
+| 207     |  20000 |       2 |         4 |
+| 208     |  30000 |       4 |         6 |
+| 209     |  65000 |       6 |         8 |
++---------+--------+---------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select sum(Amt) from  Borrow;
++----------+
+| sum(Amt) |
++----------+
+|   637000 |
++----------+
+1 row in set (0.02 sec)
+
+mysql> SELECT SUM(Amt) FROM Borrow;
++----------+
+| SUM(Amt) |
++----------+
+|   637000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(Amt) FROM Deposit;
++----------+
+| SUM(Amt) |
++----------+
+|    14500 |
++----------+
+1 row in set (0.02 sec)
+
+mysql> SELECT MAX(Amt) FROM Deposit where cust_id in (select Cust_id from Customer where city='Eranakulam');
++----------+
+| MAX(Amt) |
++----------+
+|     NULL |
++----------+
+1 row in set (0.02 sec)
+
+mysql> desc Customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| c_name  | varchar(15) | NO   |     | NULL    |       |
+| city    | varchar(10) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select *from Customer;
++---------+--------+------------+
+| cust_id | c_name | city       |
++---------+--------+------------+
+| 1       | Anu    | Kochi      |
+| 10      | Anil   | Kannur     |
+| 2       | Beena  | Kozhikode  |
+| 3       | Cathy  | Alappuzha  |
+| 4       | devika | Eranakulam |
+| 5       | Evin   | Thrissur   |
+| 6       | Firoz  | Trivandram |
+| 7       | George | Kottayam   |
+| 8       | Hari   | Cherthala  |
+| 9       | Ryan   | Kollam     |
++---------+--------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select *from Branch;
++-----------+--------+------------+
+| branch_id | bname  | City       |
++-----------+--------+------------+
+| cc1       | ala01  | Alappuzha  |
+| cc10      | kz01   | Kozhikode  |
+| cc2       | che01  | Chennai    |
+| cc3       | cher01 | Cherthala  |
+| cc4       | mub01  | mumbai     |
+| cc5       | kollo1 | Kollam     |
+| cc6       | del01  | Delhi      |
+| cc7       | aro01  | Aroor      |
+| cc8       | er01   | Eranakulam |
+| cc9       | ko01   | Kochi      |
++-----------+--------+------------+
+10 rows in set (0.01 sec)
+
+mysql> select count(distinct city) from Branch;
++----------------------+
+| count(distinct city) |
++----------------------+
+|                   10 |
++----------------------+
+1 row in set (0.03 sec)
+
+mysql> select Branch_id,SUM(Amt) from Deposit group by Branch_id;
++-----------+----------+
+| Branch_id | SUM(Amt) |
++-----------+----------+
+| ko01      |    14500 |
++-----------+----------+
+1 row in set (0.03 sec)
+
+
+mysql> SELECT Branch_id, SUM(Amt)
+    -> FROM Deposit
+    -> GROUP BY Branch_id
+    -> HAVING SUM(Amt) > 4000;
++-----------+----------+
+| Branch_id | SUM(Amt) |
++-----------+----------+
+| ko01      |    14500 |
++-----------+----------+
+1 row in set (0.01 sec)
+
+mysql> desc Deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(15) | NO   | PRI | NULL    |       |
+| cust_id   | varchar(15) | NO   |     | NULL    |       |
+| Amt       | int         | YES  |     | NULL    |       |
+| Branch_id | varchar(15) | YES  |     | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select *from Deposit;
++--------+---------+-------+-----------+------------+
+| Acc_no | cust_id | Amt   | Branch_id | Open_date  |
++--------+---------+-------+-----------+------------+
+| acc1   | 1       | 14500 | ko01      | 2022-02-08 |
++--------+---------+-------+-----------+------------+
+1 row in set (0.00 sec)
+
+
+mysql> INSERT INTO Deposit (Acc_no, Cust_id, Amt, Branch_id, Open_date)
+    -> VALUES 
+    -> (102, 2, 30000, 2, '2017-06-15'),
+    -> (103, 3, 45000, 3, '2019-03-25'),
+    -> (104, 4, 12000, 4, '2020-07-30'),
+    -> (105, 5, 70000, 5, '2015-08-14'),
+    -> (106, 6, 25000, 6, '2016-01-11'),
+    -> (107, 7, 80000, 7, '2021-01-10'),
+    -> (108, 8, 22000, 8, '2014-11-22'),
+    -> (109, 9, 55000, 9, '2019-12-05'),
+    -> (110, 10, 15000, 10, '2018-10-31');
+Query OK, 9 rows affected (0.13 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select Branch_id,SUM(Amt) from Deposit group by Branch_id;
++-----------+----------+
+| Branch_id | SUM(Amt) |
++-----------+----------+
+| 2         |    30000 |
+| 3         |    45000 |
+| 4         |    12000 |
+| 5         |    70000 |
+| 6         |    25000 |
+| 7         |    80000 |
+| 8         |    22000 |
+| 9         |    55000 |
+| 10        |    15000 |
+| ko01      |    14500 |
++-----------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT Branch_id, SUM(Amt) FROM Deposit GROUP BY Branch_id HAVING SUM(Amt) > 4000;
++-----------+----------+
+| Branch_id | SUM(Amt) |
++-----------+----------+
+| 2         |    30000 |
+| 3         |    45000 |
+| 4         |    12000 |
+| 5         |    70000 |
+| 6         |    25000 |
+| 7         |    80000 |
+| 8         |    22000 |
+| 9         |    55000 |
+| 10        |    15000 |
+| ko01      |    14500 |
++-----------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT C.C_name FROM Customer C JOIN Deposit D ON C.Cust_id = D.cust_id WHERE D.Amt = (SELECT MIN(Amt) FROM Deposit);
++--------+
+| C_name |
++--------+
+| devika |
++--------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT COUNT(DISTINCT C.cust_id) AS Depositors_Count
+    -> FROM Customer C
+    -> JOIN Deposit D ON C.cust_id = D.cust_id
+    -> WHERE C.City = 'Cherthala';
++------------------+
+| Depositors_Count |
++------------------+
+|                1 |
++------------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT MAX(Amt) AS Max_Deposit
+    -> FROM Deposit
+    -> WHERE Branch_id = (SELECT Branch_id FROM Branch WHERE City = 'Alappuzha');
++-------------+
+| Max_Deposit |
++-------------+
+|        NULL |
++-------------+
+1 row in set (0.01 sec)
+
+
+
+mysql>  SELECT COUNT(*) AS Customers_In_Ernakulam FROM Customer WHERE City = 'Eranakulam';
++------------------------+
+| Customers_In_Ernakulam |
++------------------------+
+|                      1 |
++------------------------+
+1 row in set (0.00 sec)
+
+
+
+mysql> SELECT cust_id, c_name, City FROM Customer WHERE City NOT IN ('Eranakulam', 'Alappuzha');
++---------+--------+------------+
+| cust_id | c_name | City       |
++---------+--------+------------+
+| 1       | Anu    | Kochi      |
+| 10      | Anil   | Kannur     |
+| 2       | Beena  | Kozhikode  |
+| 5       | Evin   | Thrissur   |
+| 6       | Firoz  | Trivandram |
+| 7       | George | Kottayam   |
+| 8       | Hari   | Cherthala  |
+| 9       | Ryan   | Kollam     |
++---------+--------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT cust_id, c_name FROM Customer ORDER BY c_name DESC
+    -> ;
++---------+--------+
+| cust_id | c_name |
++---------+--------+
+| 9       | Ryan   |
+| 8       | Hari   |
+| 7       | George |
+| 6       | Firoz  |
+| 5       | Evin   |
+| 4       | devika |
+| 3       | Cathy  |
+| 2       | Beena  |
+| 1       | Anu    |
+| 10      | Anil   |
++---------+--------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT Branch_id, COUNT(DISTINCT cust_id) AS Depositors_Count FROM Deposit GROUP BY Branch_id;
++-----------+------------------+
+| Branch_id | Depositors_Count |
++-----------+------------------+
+| 10        |                1 |
+| 2         |                1 |
+| 3         |                1 |
+| 4         |                1 |
+| 5         |                1 |
+| 6         |                1 |
+| 7         |                1 |
+| 8         |                1 |
+| 9         |                1 |
+| ko01      |                1 |
++-----------+------------------+
+10 rows in set (0.00 sec)
+
+
+mysql> SELECT B.Branch_id, B.bname FROM Branch B LEFT JOIN Borrow BW ON B.Branch_id = BW.Branch_id WHERE BW.Branch_id IS NULL;
++-----------+--------+
+| Branch_id | bname  |
++-----------+--------+
+| cc1       | ala01  |
+| cc10      | kz01   |
+| cc2       | che01  |
+| cc3       | cher01 |
+| cc4       | mub01  |
+| cc5       | kollo1 |
+| cc6       | del01  |
+| cc7       | aro01  |
+| cc8       | er01   |
+| cc9       | ko01   |
++-----------+--------+
+10 rows in set, 10 warnings (0.03 sec)
+
+mysql> SELECT COUNT(*) AS Depositors_After_2016 FROM Deposit WHERE Open_date > '2016-01-01';
++-----------------------+
+| Depositors_After_2016 |
++-----------------------+
+|                     8 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> 
+
