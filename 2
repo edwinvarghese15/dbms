@@ -1,0 +1,131 @@
+-- 1. Insert minimum 10 rows on each table and display that data.
+
+INSERT INTO CUSTOMER (Cust_id, C_name, City) VALUES
+(1, 'Anil', 'Ernakulam'),
+(2, 'Suresh', 'Kochi'),
+(3, 'Rahul', 'Trivandrum'),
+(4, 'Sangeeta', 'Kottayam'),
+(5, 'Amit', 'Alappuzha'),
+(6, 'Saraswati', 'Thrissur'),
+(7, 'Ramesh', 'Palakkad'),
+(8, 'Sathya', 'Kollam'),
+(9, 'Anju', 'Kannur'),
+(10, 'Varun', 'Calicut');
+
+INSERT INTO BRANCH (Branch_id, bname, City) VALUES
+(1, 'Main Branch', 'Ernakulam'),
+(2, 'Cherthala Branch', 'Cherthala'),
+(3, 'Kochi Branch', 'Kochi'),
+(4, 'Aroor Branch', 'Aroor'),
+(5, 'Alappuzha Branch', 'Alappuzha'),
+(6, 'Thrissur Branch', 'Thrissur'),
+(7, 'Palakkad Branch', 'Palakkad'),
+(8, 'Kollam Branch', 'Kollam'),
+(9, 'Kannur Branch', 'Kannur'),
+(10, 'Calicut Branch', 'Calicut');
+
+INSERT INTO DEPOSIT (Acc_no, Cust_id, Amount, Branch_id, Open_date) VALUES
+(101, 1, 20000, 1, '2015-05-12'),
+(102, 2, 45000, 2, '2017-06-15'),
+(103, 3, 70000, 3, '2018-03-20'),
+(104, 4, 5000, 4, '2019-08-25'),
+(105, 5, 100000, 5, '2014-11-30'),
+(106, 6, 60000, 6, '2017-07-07'),
+(107, 7, 75000, 7, '2018-09-10'),
+(108, 8, 9000, 8, '2016-01-01'),
+(109, 9, 12000, 9, '2015-12-12'),
+(110, 10, 30000, 10, '2020-05-05');
+
+INSERT INTO BORROW (Loan_no, Cust_id, Branch_id, Amount) VALUES
+(201, 1, 1, 50000),
+(202, 2, 2, 70000),
+(203, 3, 3, 90000),
+(204, 4, 4, 20000),
+(205, 5, 5, 100000),
+(206, 6, 6, 40000),
+(207, 7, 7, 80000),
+(208, 8, 8, 15000),
+(209, 9, 9, 30000),
+(210, 10, 10, 50000);
+
+-- 2. List Cust_id along with customer name.
+SELECT Cust_id, C_name FROM CUSTOMER;
+
+-- 3. List Cust_id of customers having amount greater than 10000.
+SELECT Cust_id FROM DEPOSIT WHERE Amount > 10000;
+
+-- 4. List account date of customer ‘Anil’.
+SELECT Open_date FROM DEPOSIT 
+WHERE Cust_id = (SELECT Cust_id FROM CUSTOMER WHERE C_name = 'Anil');
+
+-- 5. List Cust_id of customers who have opened account after 01/01/2016.
+SELECT Cust_id FROM DEPOSIT WHERE Open_date > '2016-01-01';
+
+-- 6. List account no. and Cust_id of customers having amount between 40,000 and 80,000.
+SELECT Acc_no, Cust_id FROM DEPOSIT WHERE Amount BETWEEN 40000 AND 80000;
+
+-- 7. List customer name starting with ‘S’.
+SELECT C_name FROM CUSTOMER WHERE C_name LIKE 'S%';
+
+-- 8. List customer from depositor starting with ‘_a%’.
+SELECT C_name FROM CUSTOMER 
+WHERE C_name LIKE '_a%' AND Cust_id IN (SELECT Cust_id FROM DEPOSIT);
+
+-- 9. List customer name, account no and amount from deposit having exactly 5 characters in name.
+SELECT C.C_name, D.Acc_no, D.Amount 
+FROM CUSTOMER C JOIN DEPOSIT D ON C.Cust_id = D.Cust_id 
+WHERE C.C_name LIKE '_____';
+
+-- 10. List Cust_id, Loan no and Loan amount of borrowers.
+SELECT Cust_id, Loan_no, Amount FROM BORROW;
+
+-- 11. List Cust_id and C_name of depositors.
+SELECT C.Cust_id, C.C_name FROM CUSTOMER C 
+WHERE C.Cust_id IN (SELECT Cust_id FROM DEPOSIT);
+
+-- 12. List all the customers who are depositors but not borrowers.
+SELECT C.Cust_id, C.C_name FROM CUSTOMER C
+WHERE C.Cust_id IN (SELECT Cust_id FROM DEPOSIT)
+AND C.Cust_id NOT IN (SELECT Cust_id FROM BORROW);
+
+-- 13. List all the customers who are both depositors and borrowers.
+SELECT C.Cust_id, C.C_name FROM CUSTOMER C
+WHERE C.Cust_id IN (SELECT Cust_id FROM DEPOSIT)
+AND C.Cust_id IN (SELECT Cust_id FROM BORROW);
+
+-- 14. List all the customers along with their amount who are either borrowers.
+SELECT C.Cust_id, C.C_name, COALESCE(D.Amount, B.Amount) AS Amount
+FROM CUSTOMER C
+LEFT JOIN DEPOSIT D ON C.Cust_id = D.Cust_id
+LEFT JOIN BORROW B ON C.Cust_id = B.Cust_id;
+
+-- 15. List the cities of depositors having branch ‘Cherthala’.
+SELECT C.City FROM CUSTOMER C
+JOIN DEPOSIT D ON C.Cust_id = D.Cust_id
+JOIN BRANCH B ON D.Branch_id = B.Branch_id
+WHERE B.bname = 'Cherthala Branch';
+
+-- 16. Update 10% interest to all depositors.
+UPDATE DEPOSIT SET Amount = Amount * 1.10;
+
+-- 17. Update 10% to all depositors living in ‘Ernakulam’.
+UPDATE DEPOSIT SET Amount = Amount * 1.10
+WHERE Cust_id IN (SELECT Cust_id FROM CUSTOMER WHERE City = 'Ernakulam');
+
+-- 18. Change living city of the ‘Aroor’ branch borrowers to Aroor.
+UPDATE CUSTOMER SET City = 'Aroor'
+WHERE Cust_id IN (SELECT Cust_id FROM BORROW WHERE Branch_id = 
+                   (SELECT Branch_id FROM BRANCH WHERE bname = 'Aroor Branch'));
+
+-- 19. Delete branches having deposit from Kollam.
+DELETE FROM BRANCH WHERE Branch_id IN 
+(SELECT Branch_id FROM DEPOSIT WHERE Cust_id IN 
+ (SELECT Cust_id FROM CUSTOMER WHERE City = 'Kollam'));
+
+-- 20. Delete depositors of branches having number of customers between 1 and 3.
+DELETE FROM DEPOSIT WHERE Branch_id IN 
+(SELECT Branch_id FROM (SELECT Branch_id, COUNT(Cust_id) AS num_cust FROM DEPOSIT GROUP BY Branch_id) T 
+WHERE num_cust BETWEEN 1 AND 3);
+
+-- 21. Delete depositors having deposit less than Rs500.
+DELETE FROM DEPOSIT WHERE Amount < 500;
