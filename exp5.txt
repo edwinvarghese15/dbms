@@ -1,0 +1,73 @@
+mysql> create view v_dept as select dept_id,name,location_id from department;
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> select * from v_dept;
++---------+------------+-------------+
+| dept_id | name       | location_id |
++---------+------------+-------------+
+|      10 | Sales      |           1 |
+|      20 | HR         |           2 |
+|      30 | IT         |           3 |
+|      40 | Accounting |           1 |
++---------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> create view view = department as select dept_id,name,location_id from department where dept_id=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= department as select dept_id,name,location_id from department where dept_id=10' at line 1
+mysql> create view v_deptid as select dept_id,name,location_id from department where dept_id=10;
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> select * from v_deptid;
++---------+-------+-------------+
+| dept_id | name  | location_id |
++---------+-------+-------------+
+|      10 | Sales |           1 |
++---------+-------+-------------+
+1 row in set (0.00 sec)
+
+mysql> alter view v_dept as select location_id from department where location_id=3;
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> select * from v_dept;
++-------------+
+| location_id |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> drop view v_dept;
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> create index index_dept on department(dept_id,name);
+Query OK, 0 rows affected (1.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from index_dept;
+ERROR 1146 (42S02): Table 'example.index_dept' doesn't exist
+mysql> show index from index_dept;
+ERROR 1146 (42S02): Table 'example.index_dept' doesn't exist
+mysql> show index from department;
++------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table      | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| department |          0 | PRIMARY    |            1 | dept_id     | A         |           4 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| department |          1 | index_dept |            1 | dept_id     | A         |           4 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| department |          1 | index_dept |            2 | name        | A         |           4 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.27 sec)
+
+mysql> alter table department drop index index_dept;
+Query OK, 0 rows affected (0.27 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from department;
++------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table      | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| department |          0 | PRIMARY  |            1 | dept_id     | A         |           4 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set (0.01 sec)
+
+mysql> 
+
